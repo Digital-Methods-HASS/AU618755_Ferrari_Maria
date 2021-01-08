@@ -1,0 +1,29 @@
+Translation of metadata from Danish to English for citizenship records 1740 1862 provided by Aarhus Stadsarkiv https://github.com/aarhusstadsarkiv/datasets/tree/master/citizenship/1740-1862:
+
+(from right to left)
+
+Arkiv: archive
+Bye: city
+Herred: district
+Amt: county
+Sognenr: parish number
+Recnr: record number
+Folie: folder
+Aar: year
+Borgerskabsdag: day of citizenship
+Bordered: citizenship-oath
+Borgerskabsdato: date of citizenship
+Fornavn: first name
+Efternavn: last name
+Oprindelsessted: place of origin
+Land: country
+Alder: age
+Hovederhverv: main profession
+Noter: notes
+
+-
+
+Explanation of metadata:
+
+years_liv: amount of years lived
+Avg_years_liv: average amount of years lived
