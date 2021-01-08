@@ -1,0 +1,432 @@
+[
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "noter",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "[Død 1899 i København] [Virksom som fotograf 1861-1870]"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "[Død 1899 i København]"
+      }
+    ],
+    "description": "Mass edit cells in column noter"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "noter",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "[Død i København efter 1889]"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "NA"
+      }
+    ],
+    "description": "Mass edit cells in column noter"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "noter",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "[Død efter 1857]"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "NA"
+      }
+    ],
+    "description": "Mass edit cells in column noter"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "noter",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "[Virksom i Århus 1842-1852, død i Amerika]"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "NA"
+      }
+    ],
+    "description": "Mass edit cells in column noter"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "baseColumnName": "noter",
+    "expression": "grel:value.replace(/[A-Za-z]/, '').replace(/[æøåÆØÅ]/, '').replace(/[ ,.-]/, '').replace(\"[\", \"\").replace(\"]\", \"\").replace(\"*\", \"\").replace(\":\", \"\")",
+    "onError": "set-to-blank",
+    "newColumnName": "year_death",
+    "columnInsertIndex": 18,
+    "description": "Create column year_death at index 18 based on column noter using expression grel:value.replace(/[A-Za-z]/, '').replace(/[æøåÆØÅ]/, '').replace(/[ ,.-]/, '').replace(\"[\", \"\").replace(\"]\", \"\").replace(\"*\", \"\").replace(\":\", \"\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "year_death",
+    "expression": "grel:substring(value, -4)",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column year_death using expression grel:substring(value, -4)"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "year_death",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column year_death using expression value.toNumber()"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "aar",
+    "newColumnName": "year",
+    "description": "Rename column aar to year"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "year",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column year using expression value.toNumber()"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "alder",
+    "newColumnName": "age",
+    "description": "Rename column alder to age"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "age",
+    "expression": "grel:value.replace(\"[\", \"\").replace(\"]\", \"\").replace(\"-\", \"NA\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column age using expression grel:value.replace(\"[\", \"\").replace(\"]\", \"\").replace(\"-\", \"NA\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "age",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column age using expression value.toNumber()"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "age",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "30}"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "30"
+      }
+    ],
+    "description": "Mass edit cells in column age"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "baseColumnName": "age",
+    "expression": "grel:cells['year'].value - cells['age'].value",
+    "onError": "set-to-blank",
+    "newColumnName": "year_born",
+    "columnInsertIndex": 16,
+    "description": "Create column year_born at index 16 based on column age using expression grel:cells['year'].value - cells['age'].value"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "baseColumnName": "year_death",
+    "expression": "grel:cells['year_death'].value - cells['year_born'].value",
+    "onError": "set-to-blank",
+    "newColumnName": "years_liv",
+    "columnInsertIndex": 20,
+    "description": "Create column years_liv at index 20 based on column year_death using expression grel:cells['year_death'].value - cells['year_born'].value"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        },
+        {
+          "type": "list",
+          "name": "years_liv",
+          "expression": "isBlank(value)",
+          "columnName": "years_liv",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "years_liv",
+    "expression": "grel:if(isBlank(value.trim()), \"NA\", value)",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column years_liv using expression grel:if(isBlank(value.trim()), \"NA\", value)"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "noter",
+          "columnName": "noter",
+          "query": "død",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        },
+        {
+          "type": "list",
+          "name": "year_born",
+          "expression": "isBlank(value)",
+          "columnName": "year_born",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "year_born",
+    "expression": "grel:if(isBlank(value.trim()), \"NA\", value)",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column year_born using expression grel:if(isBlank(value.trim()), \"NA\", value)"
+  }
+]
