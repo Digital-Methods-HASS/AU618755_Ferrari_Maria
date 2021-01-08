@@ -4,4 +4,5 @@ This GitHub repository contains my operation history for OpenRefine as well as a
 
 # License
 In the repository belonging to Aarhus Stadsarkiv it says in the data package that the data is under the Open Data Commons Public Domain Dedication and License (version 1.0) (https://github.com/aarhusstadsarkiv/datasets/blob/master/citizenship/1740-1862/datapackage.json). 
+
 You may use my operation history and script in accordance with the Creative Commons license. 
