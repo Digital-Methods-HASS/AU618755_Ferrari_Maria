@@ -1,0 +1,95 @@
+---
+title: "W7 - Practicing functions with Gapminder"
+date: "15/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+First I start out by loading tidyverse and the gapminder data:
+
+```{r}
+library(tidyverse)
+library(gapminder)
+```
+
+## Using functions to calculate GDP
+
+**Question 1**: *Define a defensive function that calculates the Gross Domestic Product of a nation from the data available in the gapminder dataset. You can use the population and GDPpercapita columns for it. Using that function, calculate the GDP of Denmark in the following years: 1967, 1977, 1987, 1997, 2007, and 2017.*
+
+```{r}
+calcGDP <- function(dat, year=NULL, country=NULL) {
+  if(!is.null(year)) {
+    dat <- dat[dat$year %in% year, ]
+  }
+  if(!is.null(country)) {
+    dat <- dat[dat$country %in% country, ]
+  }
+  gdp <- dat$pop * dat$gdpPercap #defining GDP by multiplying population with GDP per capita.
+  
+  new <- cbind(dat, gdp=gdp) #creates new data frame with GDP column added.
+  return(new)
+}
+```
+
+Now I'm going to use the function. I'm specifying that the country should be Denmark and that the years should be 1967, 1977, 1987, 1997, 2007, and 2017.
+
+```{r}
+calcGDP(gapminder, year = c(1967, 1977, 1987, 1997, 2007, 2017), country = "Denmark")
+```
+
+## Control flow
+
+**Question 2**: *Write a script that loops over each country in the gapminder dataset, tests whether the country starts with a ‘B’ , and prints out whether the life expectancy is smaller than 50, between 50 and 70, or greater than 70.*
+
+Firstly, I define the lower and upper threshold. Furthermore, I make a new variable called candidateCountries with the countries that start with the letter B:
+
+```{r}
+lowerThreshold <- 50
+upperThreshold <- 70
+candidateCountries <- grep("^B", unique(gapminder$country), value = TRUE)
+```
+
+
+```{r}
+for (iCountry in candidateCountries) {
+  tmp <- mean(subset(gapminder, country == iCountry)$lifeExp)
+  
+  if(tmp < lowerThreshold) {
+      cat("Average Life Expectancy in", iCountry, "is less than", lowerThreshold, "\n")
+  } else if(tmp > lowerThreshold && tmp < upperThreshold) {
+      cat("Average Life Expectancy in", iCountry, "is between", lowerThreshold, "and", upperThreshold, "\n")
+  } else {
+      cat("Average Life Expectancy in", iCountry, "is greater than", upperThreshold, "\n")
+  }
+  rm(tmp)
+}
+```
+
+## Creating a graph (optional)
+
+**Question 3**: ***Challenge/Optional***: *Write a script that loops over each country in the gapminder dataset, tests whether the country starts with a ‘M’ and graphs life expectancy against time (using plot() function) as a line graph if the mean life expectancy is under 50 years.*
+
+```{r}
+thresholdValue <- 50
+countries_letter_M <- grep("^M", unique(gapminder$country), value = TRUE)
+
+for (iCountry in countries_letter_M) {
+  tmp <- mean(subset(gapminder, country == iCountry)$lifeExp) #defining average life expectancy.
+  
+  if (tmp < thresholdValue) { #checks if average life expectancy is below 50.
+
+    with(subset(gapminder, country == iCountry),
+         plot(year, lifeExp,
+              type = "o",
+              main = paste("Life Expectancy in", iCountry, "over time"),
+              ylab = "Life Expectancy",
+              xlab = "Year"
+              )
+         )
+  }
+  rm(tmp)
+}
+```
