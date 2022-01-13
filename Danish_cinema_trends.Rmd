@@ -1,0 +1,89 @@
+---
+title: "Movies Shown in Danish Cinemas"
+author: "Maria Ferrari Munksø"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(gganimate)
+cinema_data <- read_csv(here("dst_cinema.csv"), na = "NULL")
+```
+
+## How many countries are in the dataset?
+```{r}
+n_distinct(cinema_data$Nationalitet, na.rm = TRUE)
+```
+
+## Most popular movies shown in Denmark
+
+These are the most popular movies shown in Denmark. Sorted by number of tickets sold.
+
+```{r}
+cinema_data %>% 
+  filter(!is.na(`Antal solgte biografbilletter`)) %>% 
+  group_by(`Dansk titel`, `Antal solgte biografbilletter`) %>% 
+  summarise(min_tickets_sold = min(`Antal solgte biografbilletter`)) %>% 
+  arrange(desc(min_tickets_sold))
+```
+
+## Which countries are the movies from?
+
+Countries with the most movies shown in Danish cinemas.
+
+**Arranged by number of movies shown**
+```{r}
+cinema_data %>% 
+  select(Nationalitet) %>% 
+  count(Nationalitet) %>% 
+  arrange(desc(n))
+```
+
+**Arranged by number of tickets sold**
+```{r}
+aggregate(x = cinema_data$`Antal solgte biografbilletter`,
+          by = list(cinema_data$Nationalitet),
+          FUN = sum) %>% 
+  arrange(desc(x))
+```
+
+**I created a new object with the seven countries which has sold the most tickets.**
+```{r}
+cinema_data_top_7 <- cinema_data %>% 
+  filter(Nationalitet == "USA" | Nationalitet == "DANMARK" | Nationalitet == "STORBRITANNIEN" | Nationalitet == "FRANKRIG" | Nationalitet == "ITALIEN" | Nationalitet == "TYSKLAND" | Nationalitet == "SVERIGE") %>% 
+  select(Nationalitet, `Antal solgte biografbilletter`, `premiere år`, `Original titel`)
+
+cinema_data_top_7
+```
+
+## Visualisation showing the development
+
+**Firstly, I created a new object where the sum of tickets sold was calculated for each year.**
+```{r}
+cinema_data_with_sum <- cinema_data_top_7 %>% 
+  group_by(Nationalitet, `premiere år`) %>% 
+  mutate(sum_by_group = sum(`Antal solgte biografbilletter`)) 
+```
+
+```{r}
+cinema_data_with_sum %>% 
+  ggplot(aes(x = `premiere år`, y = sum_by_group, colour = Nationalitet)) +
+  geom_point() +
+  scale_color_manual(labels = c("Denmark", "France", "Italy", "GB", "Sweden", "Germany", "USA"), values = c("#FF4821", "#3BAEE7", "#1BA634", "#4EF3DF", "#E1DB10", "#FFBD25", "#8F58EE")) +
+  labs(tile = "Tickets sold in Danish cinemas",
+       x = "Year",
+       y = "Yearly sum of tickets sales") +
+  theme(legend.position = "top",
+        legend.title = element_blank()) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(breaks=pretty(cinema_data_with_sum$`premiere år`, n=10))
+```

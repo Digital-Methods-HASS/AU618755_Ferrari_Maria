@@ -1,0 +1,10 @@
+Translation of metadata (From Danish to English)
+
+Filmkode: Film code
+Dansk titel: Danish title
+Original titel: Original title
+Nationalitet: Nationality
+Filmens længde I minutter: Film length in minutes
+Premiere uge: Week of premiere
+Premiere år: Year of premiere
+Antal solgte biografbilletter: Number of tickets sold
